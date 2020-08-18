@@ -1,12 +1,11 @@
 import cv2 as cv
 import time
-import subprocess as sp
-from os import remove
 from tqdm import tqdm
 import argparse
 import pathlib
 
-def process_video(file_name, output_file_name):
+def process_video(file_name: str , output_file_name: str) -> None:
+    """PRocess video file writing its output"""
     cap = cv.VideoCapture(file_name)
 
     width, height = (
@@ -18,7 +17,7 @@ def process_video(file_name, output_file_name):
 
     fourcc = cv.VideoWriter_fourcc('m', 'p', '4', 'v')
     out = cv.VideoWriter()
-    out.open(output_file_name, fourcc, fps, (width, height), True)
+    out.open(output_file_name, fourcc, fps, (width, height), False)
 
     try:
         with tqdm(total=total_frames) as pbar:
@@ -37,15 +36,21 @@ def process_video(file_name, output_file_name):
 
 
                 ########################################################################
-                out.write(im)
+                out.write(grey)
+                # cv.imshow("i",grey)
+                # if cv.waitKey(1) & 0xFF == ord('q'):
+                #     break
+        
+              
     finally:
         # Release resources
         cap.release()
         out.release()
+        $$cv.destroyAllWindows()
 
     
 
-def single_process(videofile_name, output_file_name):
+def single_process(videofile_name: str , output_file_name: str) -> None:
     start_time = time.time()
     process_video(videofile_name, output_file_name)
     end_time = time.time()
