@@ -11,12 +11,12 @@ def grey_image(file: str) -> None:
 
 
 
-def process_img(img: str) -> None:
+def process_img(imgPath: str):
     """PRocess single image writing its output"""
     tensorflowNet = cv.dnn.readNetFromTensorflow("model/frozen_inference_graph.pb", "model/config.pbtxt")
  
     # Input image
-    img = cv.imread(img)
+    img = cv.imread(imgPath)
     rows, cols, channels = img.shape
     
     # Use the given image as input, which needs to be blob(s).
@@ -40,9 +40,10 @@ def process_img(img: str) -> None:
             cv.rectangle(img, (int(left), int(top)), (int(right), int(bottom)), (0, 0, 255), thickness=2)
     
     # Show the image with a rectagle surrounding the detected objects 
-    cv.imshow('Image', img)
-    cv.waitKey()
-    cv.destroyAllWindows()
+    # cv.imshow('Image', img)
+    # cv.waitKey()
+    # cv.destroyAllWindows()
+    cv.imwrite(imgPath, img)
 
 def process_video(file_name: str , output_file_name: str) -> None:
     """PRocess video file writing its output"""
