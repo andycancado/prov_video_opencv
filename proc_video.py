@@ -4,7 +4,15 @@ from tqdm import tqdm
 import argparse
 import pathlib
 
+def grey_image(file: str) -> None:
+     img = cv.imread(file)
+     grey = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+     cv.imwrite(file,grey)
+
+
+
 def process_img(img: str) -> None:
+    """PRocess single image writing its output"""
     tensorflowNet = cv.dnn.readNetFromTensorflow("model/frozen_inference_graph.pb", "model/config.pbtxt")
  
     # Input image
